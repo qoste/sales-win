@@ -1,1 +1,1 @@
-# materinal follow up project for student graduation
+# WEB BASED SUPER MARKETING MANAGEMENT SYSTEM FOR TONA SUPERMARKET
