@@ -45,7 +45,7 @@ if (isset($_POST['register'])) {
     } else {
 
         $error = true;
-        $msg = 'error occuered.';
+        $msg = 'error occurred.';
         print_r(mysqli_error($conn));
     }
 }
@@ -103,7 +103,7 @@ if (isset($_POST['register'])) {
 
                         <div class="form-group">
                             <label for="temperature">Temperature(℃)</label>
-                            <input type="number" min="1" max="60"  name="temperature" id="temperature" class="form-control" autocomplete="temperature" required>
+                            <input type="number" min="1" max="60" name="temperature" id="temperature" class="form-control" autocomplete="temperature" required>
                         </div>
 
                     </div>
@@ -111,7 +111,7 @@ if (isset($_POST['register'])) {
 
                         <div class="form-group">
                             <label for="bp">BP-blood pressure (mm/Hg)</label>
-                            <input type="number"  name="bp" id="bp" class="form-control" autocomplete="bp" required>
+                            <input type="number" name="bp" id="bp" class="form-control" autocomplete="bp" required>
                         </div>
 
                     </div>
@@ -127,7 +127,7 @@ if (isset($_POST['register'])) {
 
                         <div class="form-group">
                             <label for="rr">RR(respiration rate)- RPM</label>
-                            <input type="number" min="1"  name="rr" id="rr" class="form-control" autocomplete="rr" required>
+                            <input type="number" min="1" name="rr" id="rr" class="form-control" autocomplete="rr" required>
                         </div>
 
                     </div>
@@ -160,7 +160,7 @@ if (isset($_POST['register'])) {
                                 <option>Select Doctor</option>
                                 <?php foreach ($doctors as $key => $doctor) {
                                 ?>
-                                    <option value="<?php echo $doctor['id']; ?>"><?php echo "Dr. " .ucwords($doctor['first_name'] . " " . $doctor['middle_name']) ?></option>
+                                    <option value="<?php echo $doctor['id']; ?>"><?php echo "Dr. " . ucwords($doctor['first_name'] . " " . $doctor['middle_name']) ?></option>
 
                                 <?php } ?>
 

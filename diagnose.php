@@ -19,7 +19,7 @@ if (isset($_POST['register'])) {
     VALUES  (?,?,?,?,?,?)";
 
     $assessed_by = $user->first_name;
-  
+
 
     $stmt = mysqli_prepare($conn, $sql);
 
@@ -36,38 +36,36 @@ if (isset($_POST['register'])) {
 
         if (mysqli_query($conn, $sql)) {
         }
-        if(isset($_POST['appointment_date'])){
+        if (isset($_POST['appointment_date'])) {
 
             $sql = "INSERT INTO `appointment`(`patient_id`, `doctor_id`, `appointment_date`, `is_made`, `is_approved`, `status`) 
             VALUES  (?,?,?,?,?,?)";
-        
+
             $assessed_by = $user->first_name;
-          
-        
+
+
             $stmt = mysqli_prepare($conn, $sql);
-            $is_made=0;
-            $status=0;
-            $is_approved=0;
-        
-        
-            mysqli_stmt_bind_param($stmt, 'iisiii', $id, $user->id, $_POST['appointment_date'], $is_made,$is_approved,$status);
-        
+            $is_made = 0;
+            $status = 0;
+            $is_approved = 0;
+
+
+            mysqli_stmt_bind_param($stmt, 'iisiii', $id, $user->id, $_POST['appointment_date'], $is_made, $is_approved, $status);
+
             mysqli_stmt_execute($stmt);
 
             if (mysqli_insert_id($conn)) {
 
                 setMessage("Appointment successfully!");
             }
-        
-        
-    }
+        }
 
 
         header('Location:mother.list.php');
     } else {
 
         $error = true;
-        $msg = 'error occuered.';
+        $msg = 'error occurred.';
         print_r(mysqli_error($conn));
     }
 }
@@ -104,63 +102,63 @@ if (isset($_POST['register'])) {
 
                 <div class="row mt-5">
 
-                   
-                    
+
+
                     <div class="col-sm-12">
-                        
+
                         <div class="form-group">
                             <input type="hidden" name="patient" value="<?php echo $id; ?>" />
                             <label for="current_pregnancy_info">current pregnancy info.</label>
-                            <textarea  rows="8" name="current_pregnancy_info" id="current_pregnancy_info" class="form-control" autocomplete="current_pregnancy_info" required></textarea>
+                            <textarea rows="8" name="current_pregnancy_info" id="current_pregnancy_info" class="form-control" autocomplete="current_pregnancy_info" required></textarea>
                         </div>
 
                     </div>
                     <div class="col-sm-12">
-                        
+
                         <div class="form-group">
                             <input type="hidden" name="patient" value="<?php echo $id; ?>" />
                             <label for="danger_sign">Danger Signs</label>
-                            <textarea  rows="8" name="danger_sign" id="danger_sign" class="form-control" autocomplete="danger_sign" required></textarea>
+                            <textarea rows="8" name="danger_sign" id="danger_sign" class="form-control" autocomplete="danger_sign" required></textarea>
                         </div>
 
                     </div>
-                 
+
                     <div class="col-sm-6">
-                        
+
                         <div class="form-group">
                             <label for="lmp">LMP</label>
-                            <input type="date" name="lmp" id="lmp" class="form-control"  required></input>
+                            <input type="date" name="lmp" id="lmp" class="form-control" required></input>
                         </div>
 
                     </div>
                     <div class="col-sm-6">
-                        
+
                         <div class="form-group">
                             <label for="edd">Expected date of delivery(EDD)</label>
-                            <input type="text" name="edd" id="edd" class="form-control"  required readonly></input>
+                            <input type="text" name="edd" id="edd" class="form-control" required readonly></input>
                         </div>
 
                     </div>
                     <div class="col-sm-12">
-                        
+
                         <div class="form-group">
                             <label for="appointment_date">Appointment Date</label>
-                            <input type="date" name="appointment_date" id="appointment_date" class="form-control"  required></input>
+                            <input type="date" name="appointment_date" id="appointment_date" class="form-control" required></input>
                         </div>
 
                     </div>
 
                     <div class="col-sm-12">
-                        
+
                         <div class="form-group">
                             <input type="hidden" name="patient" value="<?php echo $id; ?>" />
                             <label for="advice">Consultation and advice given</label>
-                            <textarea  rows="8" name="advice" id="advice" class="form-control" autocomplete="advice" required></textarea>
+                            <textarea rows="8" name="advice" id="advice" class="form-control" autocomplete="advice" required></textarea>
                         </div>
 
                     </div>
-                 
-                 
+
+
 
 
 

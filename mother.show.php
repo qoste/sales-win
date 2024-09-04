@@ -69,7 +69,7 @@ if (isset($_POST['register'])) {
     } else {
 
         $error = true;
-        $msg = 'error occuered.';
+        $msg = 'error occurred.';
         print_r(mysqli_error($conn));
     }
 }
@@ -88,8 +88,8 @@ if (isset($_POST['register'])) {
         </div>
         <!-- /.card-header -->
         <div class="card-body">
-        <div class=" h2 text-success  text-bold">Personal Information</div>
-          
+            <div class=" h2 text-success  text-bold">Personal Information</div>
+
             <table class="table table-striped table-">
 
                 <tbody>
@@ -110,8 +110,8 @@ if (isset($_POST['register'])) {
                 </tbody>
             </table>
             <div class=" h2 text-pink  text-bold">Pregnancy info</div>
-          
-            <form >
+
+            <form>
 
 
 
@@ -196,13 +196,13 @@ if (isset($_POST['register'])) {
                 </div>
 
 
-                
+
             </form>
-           
+
             <button class="btn float-right  btn-info my-3 ">
                 Close
             </button>
-            
+
 
         </div>
         <!-- /.card-body -->

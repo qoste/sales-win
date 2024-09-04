@@ -34,7 +34,7 @@ if (isset($_POST['register'])) {
         header('Location:item.list.php');
     } else {
         $error = true;
-        $msg = 'error occuered.';
+        $msg = 'error occurred.';
     }
 }
 

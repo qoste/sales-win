@@ -5,7 +5,7 @@
 
 // fetch new user 
 
-$user= fetchData("user",$_GET['id']);
+$user = fetchData("user", $_GET['id']);
 
 
 // user edit 
@@ -40,7 +40,7 @@ if (isset($_POST['register'])) {
         header('Location:user.list.php');
     } else {
         $error = true;
-        $msg = 'error occuered.';
+        $msg = 'error occurred.';
     }
 }
 
