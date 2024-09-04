@@ -25,20 +25,12 @@
 
 
 	<li class="nav-item">
-		<a href="mother.list.php" class="nav-link">
+		<a href="item.list.php" class="nav-link">
 			<i class="fa fa-tasks nav-icon"></i>
-			<p>Maternal List(doc)</p>
+			<p>Item List</p>
 		</a>
 	</li>
 
-
-
-	<li class="nav-item">
-		<a href="appointment.list.php" class="nav-link">
-			<i class="fa fa-tasks nav-icon"></i>
-			<p>Appointment List</p>
-		</a>
-	</li>
 
 <?php } ?>
 
@@ -50,6 +42,19 @@
 		<a href="item.list.php" class="nav-link">
 			<i class="fa fa-tasks nav-icon"></i>
 			<p>Items List</p>
+		</a>
+	</li>
+
+	<li class="nav-item">
+		<a href="transaction.list.php" class="nav-link">
+			<i class="fa fa-tasks nav-icon"></i>
+			<p>Transaction List</p>
+		</a>
+	</li>
+	<li class="nav-item">
+		<a href="comment.list.php" class="nav-link">
+			<i class="fa fa-tasks nav-icon"></i>
+			<p>Comments List</p>
 		</a>
 	</li>
 
