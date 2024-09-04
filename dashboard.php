@@ -14,7 +14,7 @@ $items = fetchAllData("items", "id", "DESC");
 
 <div class="row container">
 
-    <?php if ($user->user_type_id == USERS_TYPE_NURSE || $user->user_type_id == USERS_TYPE_ADMIN) { ?>
+    <?php if ($user->user_type_id == USERS_TYPE_SALES || $user->user_type_id == USERS_TYPE_ADMIN) { ?>
 
         <div class="col-md-4 col-sm-6 col-12">
             <div class="info-box">

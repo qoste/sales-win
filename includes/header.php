@@ -7,12 +7,11 @@ include 'helpers/mysqlHelper.php';
 include 'helpers/myHelper.php';
 
 const USERS_TYPE_ADMIN = 1;
-const USERS_TYPE_DOCTOR = 2;
 const USERS_TYPE_CUSTOMER = 2;
-const USERS_TYPE_NURSE = 3;
+const USERS_TYPE_SALES = 3;
 const USERS_TYPE_PATIENT = 4;
 
-$user_types = ["1" => "Admin", "2" => "Doctor", "3" => "Nurse", "4" => "Patient"];
+$user_types = ["1" => "Admin", "2" => "Customer", "3" => "Sales",];
 
 clearMessages();
 

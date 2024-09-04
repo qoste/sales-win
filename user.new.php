@@ -30,7 +30,7 @@ if (isset($_POST['register'])) {
         if ($_POST['user_type'] == USERS_TYPE_CUSTOMER) {
 
 
-            $sql = "INSERT INTO `doctor`(`first_name`, `middle_name`, `last_name`, `gender`, `birth_date`, `user_id`)
+            $sql = "INSERT INTO `customers`(`first_name`, `middle_name`, `last_name`, `gender`, `birth_date`, `user_id`)
         VALUES (?,?,?,?,?,?)";
 
 
@@ -130,8 +130,8 @@ if (isset($_POST['register'])) {
                             <label for="user_type">User Type</label>
                             <select for="user_type" class="form-control" name="user_type" id="user_type">
                                 <option value="1">Admin</option>
-                                <option value="2">Doctor</option>
-                                <option value="3">Nurse</option>
+                                <option value="2">Customer</option>
+                                <option value="3">Sales</option>
 
                             </select>
                             </select>
