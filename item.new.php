@@ -9,8 +9,8 @@ if (isset($_POST['register'])) {
 
 
 
-    $sql = "INSERT INTO `items`(`item_code`,`registered_by_id`,  `name`, `total`, `category`,  `item_price`, status)
-                                VALUES (?,?,?,?,?,?,?)";
+    $sql = "INSERT INTO `items`(`item_code`,`registered_by_id`,  `name`, `total`, `category`,  `item_price`, status, description)
+                                VALUES (?,?,?,?,?,?,?, ?)";
 
     $allergies = "";
     $registered_by_id = $user->id;
@@ -22,7 +22,7 @@ if (isset($_POST['register'])) {
     $stmt = mysqli_prepare($conn, $sql);
 
 
-    mysqli_stmt_bind_param($stmt, 'sisisii', $_POST['item_code'], $registered_by_id,  $_POST['name'], $_POST['total'], $_POST['category'],  $_POST['item_price'], $status);
+    mysqli_stmt_bind_param($stmt, 'sisisiis', $_POST['item_code'], $registered_by_id,  $_POST['name'], $_POST['total'], $_POST['category'],  $_POST['item_price'], $status, $_POST['description']);
 
     mysqli_stmt_execute($stmt);
 
@@ -104,6 +104,14 @@ if (isset($_POST['register'])) {
 
                             </select>
 
+                        </div>
+
+                    </div>
+                    <div class="col-sm-10">
+
+                        <div class="form-group">
+                            <label for="description">Item price</label>
+                            <textarea name="description" id="description" class="form-control" autocomplete="description" required rows="5"></textarea>
                         </div>
 
                     </div>
