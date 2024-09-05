@@ -7,12 +7,7 @@
 
 <?php if ($user->user_type_id == USERS_TYPE_SALES) { ?>
 
-	<li class="nav-item">
-		<a href="triage.list.php" class="nav-link">
-			<i class="fa fa-tasks nav-icon"></i>
-			<p>Triage</p>
-		</a>
-	</li>
+
 	<li class="nav-item">
 		<a href="item.list.php" class="nav-link">
 			<i class="fa fa-tasks nav-icon"></i>
@@ -38,6 +33,12 @@
 
 
 
+	<li class="nav-item">
+		<a href="order.list.php" class="nav-link">
+			<i class="fa fa-tasks nav-icon"></i>
+			<p>Orders List</p>
+		</a>
+	</li>
 	<li class="nav-item">
 		<a href="item.list.php" class="nav-link">
 			<i class="fa fa-tasks nav-icon"></i>
