@@ -110,7 +110,7 @@ if (isset($_POST['register'])) {
                     <div class="col-sm-10">
 
                         <div class="form-group">
-                            <label for="description">Item price</label>
+                            <label for="description">Description</label>
                             <textarea name="description" id="description" class="form-control" autocomplete="description" required rows="5"></textarea>
                         </div>
 

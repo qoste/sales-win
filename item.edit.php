@@ -5,7 +5,7 @@
 
 // fetch new item 
 
-$item = fetchData("item", $_GET['id']);
+$item = fetchData("items", $_GET['id']);
 
 
 // item edit 
@@ -20,7 +20,7 @@ if (isset($_POST['register'])) {
 
 
 
-    $sql = "UPDATE items  SET  phone=?, first_name=?, middle_name=?, last_name=?, gender=? WHERE id=?";
+    $sql = "UPDATE items  SET   name=?, total=?, item_price=?, category=?, description=? WHERE id=?";
 
     $gender = "Female";
 
@@ -29,7 +29,7 @@ if (isset($_POST['register'])) {
 
     print_r($stmt);
 
-    mysqli_stmt_bind_param($stmt, 'sssssi', $_POST['phone'], $_POST['first_name'], $_POST['middle_name'], $_POST['last_name'], $gender, $_POST['id']);
+    mysqli_stmt_bind_param($stmt, 'siissi', $_POST['name'], $_POST['total'], $_POST['item_price'], $_POST['category'], $_POST['description'], $_POST['id']);
 
     $res = mysqli_stmt_execute($stmt);
 
@@ -69,35 +69,55 @@ if (isset($_POST['register'])) {
                     <div class="col-sm-4">
 
                         <div class="form-group">
-                            <label for="first-name">First Name</label>
-                            <input type="text" name="first_name" id="first-name" class="form-control" autocomplete="first_name" value="<?php echo $item->first_name; ?>" required autofocus>
+                            <label for="name">Name</label>
+                            <input type="text" name="name" id="name" class="form-control" autocomplete="name" value="<?php echo $item->name; ?>" required autofocus>
                         </div>
 
                     </div>
                     <div class="col-sm-4">
 
                         <div class="form-group">
-                            <label for="middle_name">Middle Name</label>
-                            <input type="text" name="middle_name" id="middle_name" class="form-control" autocomplete="middle_name" value="<?php echo $item->middle_name; ?>" required>
+                            <label for="total">Total</label>
+                            <input type="number" name="total" id="total" class="form-control" autocomplete="total" value="<?php echo $item->total; ?>" required>
                         </div>
 
                     </div>
                     <div class="col-sm-4">
 
                         <div class="form-group">
-                            <label for="last-name">Last Name</label>
-                            <input type="text" name="last_name" id="last-name" class="form-control" autocomplete="last_name" value="<?php echo $item->last_name; ?>" required>
+                            <label for="item_price">Item Price</label>
+                            <input type="text" name="item_price" id="item_price" class="form-control" autocomplete="item_price" value="<?php echo $item->item_price; ?>" required>
                         </div>
 
                     </div>
+
                     <div class="col-sm-4">
 
                         <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="text" name="phone" pattern="(09|\+2519)[0-9]{8}" id="phone" class="form-control" autocomplete="phone" value="<?php echo $item->phone; ?>" required>
+                            <label for="category"> Category</label>
+                            <?php $categories = ['Fruit', 'Non Fruit']; ?>
+                            <select for="category" class="form-control" name="category" id="category">
+                                <?php foreach ($categories as $category) {
+                                ?>
+                                    <option <?php $cat = $category == $item->category ? "selected" : "";
+                                            echo $cat ?> value="<?php echo $category; ?>"><?php echo $category; ?> </option>
+
+                                <?php } ?>
+
+                            </select>
+
                         </div>
 
                     </div>
+                    <div class="col-sm-10">
+
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea name="description" id="description" class="form-control" autocomplete="description" required rows="5"><?php echo $item->description; ?></textarea>
+                        </div>
+
+                    </div>
+
 
                 </div>
 
