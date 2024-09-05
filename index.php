@@ -31,7 +31,7 @@
 					<div class="row">
 
 						<a href="login.php" class="btn btn-outline-primary col-6">Login</a>
-						<a href="order.php" class="btn btn-outline-primary col-6">Order</a>
+						<a href="order.new.php" class="btn btn-outline-primary col-6">Order</a>
 
 					</div>
 

@@ -82,7 +82,86 @@
         })
     }
 </script>
+<script>
+    $('.add-to-cart').on('click', function() {
+        var itemId = $(this).data('id');
+        var itemCard = $(this).closest('div.item-card');
+        var itemName = itemCard.find('h3.item-name');
+        var itemPrice = itemCard.find('span.item-price');
+        var itemCategory = itemCard.find('span.item-category');
+        var itemCode = itemCard.find('div.item-code');
+        var itemQuantity = itemCard.find('button.quantity-value');
+        console.log(itemName.text(), itemPrice.text())
+        $('.cart-items').last().after('<tr><td>' + 1 + '</td><td>' + itemCode.text() + '</td><td>' + itemName.text() + '</td><td>' + itemCategory.text() + '</td><td>' + itemPrice.text() + '</td><td class="quantity-td">' + itemQuantity.text() + '</td><td class="price-td">' + Number(itemQuantity.text() * Number(itemPrice.text())) + '</td></tr>');
 
+        var totalPrice = 0;
+        var totalQuantity = 0;
+        $('.quantity-td').each(function() {
+            totalQuantity += Number($(this).text());
+        });
+        $('.price-td').each(function() {
+            totalPrice += Number($(this).text());
+        });
+        $('.total-price-td').text(totalPrice);
+        $('.total-quantity-td').text(totalQuantity);
+
+    });
+    $('.quantity-add').on('click', function() {
+        console.log($(this).parent().parent('div').data('id'))
+        quantityDiv = $(this).parent('div').find('.quantity-value')
+        var value = quantityDiv.text();
+        quantityDiv.text(Number(value) + 1);
+
+    });
+    $('.quantity-minus').on('click', function() {
+        console.log($(this).parent().parent('div').data('id'))
+        quantityDiv = $(this).parent('div').find('.quantity-value')
+        var value = quantityDiv.text();
+        if (Number(value) > 0) {
+            quantityDiv.text(Number(value) - 1);
+        }
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $("#submitBtn").click(function() {
+            // Create an array to store the data in a key-value pair format
+            var tableData = [];
+
+            // Loop over each row in the table
+            $("#cart-items-table tr").each(function() {
+                var itemCode = $(this).find('td:eq(1)').text()
+                var rowData = {
+                    'item_code': $(this).find('td:eq(1)').text(),
+                    'item_quantity': $(this).find('td:eq(5)').text(),
+                };
+
+                // Add the row data to the tableData array
+                if (itemCode !== '') {
+                    tableData.push(rowData);
+                }
+            });
+
+            console.log(tableData)
+            // Send the collected data to the server using AJAX
+            $.ajax({
+                url: 'place-order.php', // Replace with your PHP handler file
+                type: 'POST',
+                data: {
+                    tableData: tableData
+                },
+                success: function(response) {
+                    console.log(response); // Log the server response
+                    window.location.replace("order.list.php");
+
+                },
+                error: function(error) {
+                    console.error('Error submitting data:', error);
+                }
+            });
+        });
+    });
+</script>
 </body>
 
 </html>
