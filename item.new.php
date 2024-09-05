@@ -9,8 +9,8 @@ if (isset($_POST['register'])) {
 
 
 
-    $sql = "INSERT INTO `items`(`item_code`,`registered_by_id`,  `name`, `total`, `category`,  `item_price`, status, description)
-                                VALUES (?,?,?,?,?,?,?, ?)";
+    $sql = "INSERT INTO `items`(`item_code`,`registered_by_id`,  `name`, `total`, `category`, expiry_date, `item_price`, status, description)
+                                VALUES (?,?,?,?,?,?,?,?, ?)";
 
     $allergies = "";
     $registered_by_id = $user->id;
@@ -22,7 +22,7 @@ if (isset($_POST['register'])) {
     $stmt = mysqli_prepare($conn, $sql);
 
 
-    mysqli_stmt_bind_param($stmt, 'sisisiis', $_POST['item_code'], $registered_by_id,  $_POST['name'], $_POST['total'], $_POST['category'],  $_POST['item_price'], $status, $_POST['description']);
+    mysqli_stmt_bind_param($stmt, 'sisissiis', $_POST['item_code'], $registered_by_id,  $_POST['name'], $_POST['total'], $_POST['category'], $_POST['expiry_date'],  $_POST['item_price'], $status, $_POST['description']);
 
     mysqli_stmt_execute($stmt);
 
@@ -89,6 +89,14 @@ if (isset($_POST['register'])) {
                         <div class="form-group">
                             <label for="item_price">Item price</label>
                             <input type="number" name="item_price" id="item_price" class="form-control" autocomplete="item_price" required>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-4">
+
+                        <div class="form-group">
+                            <label for="expiry_date">Expiry Date</label>
+                            <input type="date" name="expiry_date" id="expiry_date" class="form-control" autocomplete="expiry_date" required>
                         </div>
 
                     </div>

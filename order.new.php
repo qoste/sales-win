@@ -16,10 +16,12 @@ $items = fetchAllData("items", "id", "DESC");
                     <div class=" text-lg text-center item-category" style="display: none;"><?php echo $item['category']; ?> </div>
                     <img src='https://picsum.photos/300/200' class="img-rounded img-fluid img-thumbnail img-responsive" alt='<?php echo $item['name']; ?>' />
                     <div>
-                        <?php echo $item['description']; ?>
+                        <?php echo $item['description'];
+                        $diff_day = ((new DateTime(date('y-m-d')))->diff(new DateTime($item['expiry_date'])))->format('%r%a');
+                        ?>
                     </div>
-                    <div class="text-xs mt-5 float-right text-italic">Expiry Date: <span><?php $exp = random_int(5, 30);
-                                                                                            echo date('Y-m-d', strtotime(date('Y-m-d') . ' + ' . $exp . ' day')) . ' (' . $exp;  ?> days left)</span></div>
+                    <div class="text-xs mt-5 float-right text-italic <?php echo $diff_day + 0 < 0 ? 'text-red' : '' ?>">Expiry Date: <span><?php
+                                                                                                                                            echo $item['expiry_date'] . ' (' . ($diff_day + 0 > 0 ? $diff_day . ' days left' : $diff_day . ' Expired');  ?>)</span></div>
 
                     <div class=" ">
                         Price: <span class="badge badge-success item-price"><?php echo $item['item_price']; ?></span><span>ETB</span>
