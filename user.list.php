@@ -72,7 +72,7 @@ $result = mysqli_query($conn, $sql);
                         <th>ID</th>
                         <th>Email</th>
                         <th>Full Name</th>
-                        <th>Phone</th>
+                        <th>Phone Number</th>
                         <th>Gender</th>
                         <th>User Type</th>
                         <th>Status</th>
