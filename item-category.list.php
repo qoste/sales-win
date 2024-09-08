@@ -4,12 +4,12 @@
 
 if (isset($_POST['delete'])) {
 
-    $sql = "DELETE FROM items WHERE id=" . $_POST['item_id'];
+    $sql = "DELETE FROM item_category WHERE id=" . $_POST['item_id'];
     if (mysqli_query($conn, $sql)) {
 
         setMessage("Deleted successfully");
 
-        header('Location:item.list.php');
+        header('Location:item-category.list.php');
     }
 }
 
@@ -18,7 +18,7 @@ if (isset($_POST['delete'])) {
 $msg = '';
 $error = false;
 
-$sql = "SELECT * FROM items";
+$sql = "SELECT * FROM item_category";
 $result = mysqli_query($conn, $sql);
 
 
@@ -30,14 +30,14 @@ $result = mysqli_query($conn, $sql);
 
 <div class="col-12">
 
-    <h4>Item list </h4>
+    <h4>Item category list </h4>
 </div>
 
 <div class="col-12">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title"> Items list</h3>
-            <a href="item.new.php" class="btn btn-primary btn-sm mx-3">New Item</a>
+            <h3 class="card-title"> Item category list</h3>
+            <a href="item-category.new.php" class="btn btn-primary btn-sm mx-3">New Item category</a>
 
             <div class="card-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
@@ -54,13 +54,10 @@ $result = mysqli_query($conn, $sql);
             <table class="table table-hover ">
                 <thead>
                     <tr>
-                        <th>Item code</th>
 
+                        <th>S.N</th>
                         <th>Name</th>
-                        <th>Category</th>
-                        <th>Item Price(ETB)</th>
-                        <th>Total</th>
-                        <th>Registered At</th>
+                        <th>Description</th>
                         <th>actions</th>
 
                     </tr>
@@ -74,13 +71,11 @@ $result = mysqli_query($conn, $sql);
 
                     ?>
                             <tr>
-                                <td><?php echo $row['item_code'] ?></td>
+                                <td><?php echo $row['id'] ?></td>
 
                                 <td><?php echo $row['name']  ?></td>
-                                <td><span class="tag tag-success"><?php echo $row['category'] ?></span></td>
-                                <td><?php echo $row['item_price'] ?>ETB</td>
-                                <td><?php echo $row['total'] ?></td>
-                                <td><?php echo $row['registered_at'] ?></td>
+                                <td><?php echo $row['description'] ?></td>
+
                                 <td>
                                     <a href="item.edit.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">edit</a>
                                     <form method="post" onsubmit="return confirm('are you sure you want to delete this item');" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="form-horizontal form-inline">
