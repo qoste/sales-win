@@ -7,13 +7,67 @@
 
 <?php if ($user->user_type_id == USERS_TYPE_SALES) { ?>
 
+	
 
 	<li class="nav-item">
 		<a href="item.list.php" class="nav-link">
 			<i class="fa fa-tasks nav-icon"></i>
-			<p>Item List</p>
+			<p> Products List</p>
 		</a>
 	</li>
+	<li class="nav-item">
+		<a href="order.list.php" class="nav-link">
+			<i class="fa fa-tasks nav-icon"></i>
+			<p>Orders List</p>
+		</a>
+	</li>
+	<li class="nav-item">
+		<a href="transaction.list.php" class="nav-link">
+			<i class="fa fa-tasks nav-icon"></i>
+			<p>Transaction List</p>
+		</a>
+	</li>
+<?php } ?>
+
+
+<?php if ($user->user_type_id == USERS_TYPE_SALES_MANAGER) { ?>
+
+<li class="nav-item">
+	<a href="item.type.list.php" class="nav-link">
+		<i class="fa fa-tasks nav-icon"></i>
+		<p> Product Types List</p>
+	</a>
+</li>
+
+<li class="nav-item">
+	<a href="item.list.php" class="nav-link">
+		<i class="fa fa-tasks nav-icon"></i>
+		<p> Products List</p>
+	</a>
+</li>
+<li class="nav-item">
+	<a href="order.list.php" class="nav-link">
+		<i class="fa fa-tasks nav-icon"></i>
+		<p>Orders List</p>
+	</a>
+</li>
+<li class="nav-item">
+	<a href="transaction.list.php" class="nav-link">
+		<i class="fa fa-tasks nav-icon"></i>
+		<p>Transaction List</p>
+	</a>
+</li>
+<?php } ?>
+
+<?php if ($user->user_type_id == USERS_TYPE_FINANCE) { ?>
+
+<li class="nav-item">
+	<a href="item.type.list.php" class="nav-link">
+		<i class="fa fa-tasks nav-icon"></i>
+		<p> Product Types List</p>
+	</a>
+</li>
+
 <?php } ?>
 
 <?php if ($user->user_type_id == USERS_TYPE_CUSTOMER) { ?>
@@ -22,7 +76,13 @@
 	<li class="nav-item">
 		<a href="item.list.php" class="nav-link">
 			<i class="fa fa-tasks nav-icon"></i>
-			<p>Item List</p>
+			<p>Products List</p>
+		</a>
+	</li>
+	<li class="nav-item">
+		<a href="order.list.php" class="nav-link">
+			<i class="fa fa-tasks nav-icon"></i>
+			<p>Orders List</p>
 		</a>
 	</li>
 
@@ -40,9 +100,15 @@
 		</a>
 	</li>
 	<li class="nav-item">
+		<a href="item.type.list.php" class="nav-link">
+			<i class="fa fa-tasks nav-icon"></i>
+			<p> Product Types List</p>
+		</a>
+	</li>
+	<li class="nav-item">
 		<a href="item.list.php" class="nav-link">
 			<i class="fa fa-tasks nav-icon"></i>
-			<p>Items List</p>
+			<p>Products List</p>
 		</a>
 	</li>
 

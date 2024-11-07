@@ -9,9 +9,11 @@ include 'helpers/myHelper.php';
 const USERS_TYPE_ADMIN = 1;
 const USERS_TYPE_CUSTOMER = 2;
 const USERS_TYPE_SALES = 3;
-const USERS_TYPE_PATIENT = 4;
+const USERS_TYPE_FINANCE = 4;
+const USERS_TYPE_SALES_MANAGER = 5;
 
-$user_types = ["1" => "Admin", "2" => "Customer", "3" => "Sales",];
+$user_types = ["1" => "Admin", "2" => "Customer", "3" => "Sales Representative", "4"=> "Finance Department", "5"=>"Sales manager"];
+$order_status = ["0" => "Pending", "1" => "Processing", "2" => "Delivered", "3"=> "Cancelled"];
 
 clearMessages();
 
@@ -31,14 +33,14 @@ if (isset($_SESSION['user_id'])) {
 
 <head>
 	<meta charset="utf-8">
-	<link rel='shortcut icon' type='image/x-icon' href="logo.png" />
+	<link rel='shortcut icon' type='image/x-icon' href="assets/images/logo-win.PNG" />
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 	<link rel='shortcut icon' type='image/x-icon' href='#' />
 
 	<title>
-		Tona Supermarket
+		Win water | ዊን ውሃ
 		|
 		Dashboard
 	</title>

@@ -6,7 +6,7 @@ $password = "";
 
 
 // Create connection
-$conn = mysqli_connect($servername, $username, $password, "tona_supermarket");
+$conn = mysqli_connect($servername, $username, $password, "sales-ms");
 
 // Check connection
 if (!$conn) {

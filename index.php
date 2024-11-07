@@ -9,7 +9,7 @@
 				<center>
 
 					<div class="h1">
-						<h1>Welcome to Tona Supermarket management system</h1>
+						<h1>Welcome to Win water | ዊን ውሃ Sales management system</h1>
 					</div>
 
 
@@ -18,11 +18,11 @@
 
 					<p>
 						<center>
-							Tona Supermarket management system is one of the . ..................
+							Win water | ዊን ውሃ management system is one of the . ..................
 						</center>
 					</p>
 
-					<IMG SRC="bphgate.png" width="500" height="200"> <IMG SRC="lab.jpg" width="500" height="200">
+					<IMG SRC="win-water3.jpg" width="500" height="200"> <IMG SRC="win-water.jpg" width="500" height="200">
 
 
 					<div class="h1 text-danger text-capitalize">

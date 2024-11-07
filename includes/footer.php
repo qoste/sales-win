@@ -6,7 +6,7 @@
 <footer class="main-footer">
     <strong>Copyright &copy;
         2017
-        <a href=" http://Tona.Supermarket.com"> Tona Supermarket
+        <a href=" http://Win.water.com"> Win water | ዊን ውሃ
         </a>.</strong>
     All rights reserved.
     <div class="float-right d-none d-sm-inline-block">
@@ -121,6 +121,41 @@
             quantityDiv.text(Number(value) - 1);
         }
     });
+
+
+    $('#product_name').on('change', function() {
+        var minTarget = $('#product_name option:selected').data('mintarget');
+        var maxTarget = $('#product_name option:selected').data('maxtarget');
+
+        $('#product_total').attr('min',minTarget);
+        $('#product_total').attr('max',maxTarget);
+       
+    });
+</script>
+<script>
+    $(document).ready(function() {
+  $('.order-status-select').change(function() {
+    var orderId = $(this).data('order-id'); 
+    var status = $(this).val();
+
+    $.ajax({
+      url: 'order.list.php', 
+      type: 'POST',
+      data: {
+        order_id: orderId,
+        status: status,
+        action: "change_status"
+      },
+      success: function(response) {
+     
+      },
+      error: function(xhr, status, error) {
+      
+      }
+    });
+  });
+});
+
 </script>
 <script>
     $(document).ready(function() {

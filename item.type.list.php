@@ -4,24 +4,21 @@
 
 if (isset($_POST['delete'])) {
 
-    $sql = "DELETE FROM items WHERE id=" . $_POST['item_id'];
+    $sql = "DELETE FROM item_types WHERE id=" . $_POST['item_type_id'];
     if (mysqli_query($conn, $sql)) {
 
         setMessage("Deleted successfully");
 
-        header('Location:item.list.php');
+        header('Location:item.type.list.php');
     }
 }
 
 
-// login Item and set session
 $msg = '';
 $error = false;
 
-$sql = "SELECT * FROM items";
+$sql = "SELECT * FROM item_types";
 $result = mysqli_query($conn, $sql);
-
-
 
 
 
@@ -30,19 +27,15 @@ $result = mysqli_query($conn, $sql);
 
 <div class="col-12">
 
-    <h4>Item list </h4>
+    <h4>Product Types list </h4>
 </div>
 
 <div class="col-12">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title"> Items list</h3>
-            <?php  
-                                    if (in_array($user->user_type_id, [1,3])) { 
-                                        ?>
-            <a href="item.new.php" class="btn btn-primary btn-sm mx-3">New Product</a>
+            <h3 class="card-title"> Product Types list</h3>
+            <a href="item.type.new.php" class="btn btn-primary btn-sm mx-3">New Product Type</a>
 
-            <?php } ?>
             <div class="card-tools">
                 <div class="input-group input-group-sm" style="width: 150px;">
                     <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -58,12 +51,14 @@ $result = mysqli_query($conn, $sql);
             <table class="table table-hover ">
                 <thead>
                     <tr>
-                        <th>Item code</th>
+                        <th>Product Type code</th>
 
                         <th>Name</th>
                         <th>Category</th>
-                        <th>Item Price(ETB)</th>
-                        <th>Total</th>
+                        <th>Min Target</th>
+                        <th>Max Target</th>
+                        <th>Status</th>
+                        <th>Description</th>
                         <th>Registered At</th>
                         <th>actions</th>
 
@@ -78,25 +73,23 @@ $result = mysqli_query($conn, $sql);
 
                     ?>
                             <tr>
-                                <td><?php echo $row['item_code'] ?></td>
+                                <td><?php echo $row['item_type_code'] ?></td>
 
                                 <td><?php echo $row['name']  ?></td>
                                 <td><span class="tag tag-success"><?php echo $row['category'] ?></span></td>
-                                <td><?php echo $row['item_price'] ?>ETB</td>
-                                <td><?php echo $row['total'] ?></td>
+                                <td><?php echo $row['min_target'] ?></td>
+                                <td><?php echo $row['max_target'] ?></td>
+                                <td><span class="tag tag-success"><?php echo $row['status'] ?></span></td>
+
+                                <td><?php echo $row['description'] ?></td>
                                 <td><?php echo $row['registered_at'] ?></td>
                                 <td>
-                                    <?php  
-                                    if (in_array($user->user_type_id, [1,3])) { 
-                                        ?>
                                     <a href="item.edit.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">edit</a>
-                                    <form method="post" onsubmit="return confirm('are you sure you want to delete this item');" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="form-horizontal form-inline">
-                                        <input type="hidden" name="item_id" value="<?php echo $row['id']; ?>" />
+                                    <form method="post" onsubmit="return confirm('are you sure you want to delete this Product Type');" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="form-horizontal form-inline">
+                                        <input type="hidden" name="item_type_id" value="<?php echo $row['id']; ?>" />
                                         <input type="hidden" name="delete" value="true" />
                                         <button class="btn btn-danger btn-sm">delete</button>
                                     </form>
-
-                                    <?php } ?>
                                 </td>
                             </tr>
 

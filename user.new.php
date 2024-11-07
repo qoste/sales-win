@@ -131,7 +131,9 @@ if (isset($_POST['register'])) {
                             <select for="user_type" class="form-control" name="user_type" id="user_type">
                                 <option value="1">Admin</option>
                                 <option value="2">Customer</option>
-                                <option value="3">Sales</option>
+                                <option value="3">Sales Representative</option>
+                                <option value="4">Finance Department</option>
+                                <option value="5">Sales Manager</option>
 
                             </select>
                             </select>

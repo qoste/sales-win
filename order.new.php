@@ -14,7 +14,7 @@ $items = fetchAllData("items", "id", "DESC");
                     <h3 class=" text-lg text-center item-name"><?php echo $item['name']; ?> </h3>
                     <div class=" text-lg text-center item-code" style="display: none;"><?php echo $item['item_code']; ?> </div>
                     <div class=" text-lg text-center item-category" style="display: none;"><?php echo $item['category']; ?> </div>
-                    <img src='https://picsum.photos/300/200' class="img-rounded img-fluid img-thumbnail img-responsive" alt='<?php echo $item['name']; ?>' />
+                    <img src='win-water.jpg' width="300px" height="200px" class="img-rounded img-fluid img-thumbnail img-responsive" alt='<?php echo $item['name']; ?>' />
                     <div>
                         <?php echo $item['description'];
                         $diff_day = ((new DateTime(date('y-m-d')))->diff(new DateTime($item['expiry_date'])))->format('%r%a');

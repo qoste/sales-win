@@ -9,14 +9,14 @@ include 'includes/helpers/connection.php';
 
 <head>
 	<meta charset="utf-8">
-	<link rel='shortcut icon' type='image/x-icon' href="logo.png" />
+	<link rel='shortcut icon' type='image/x-icon' href="assets/images/logo-win.PNG" />
 
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 	<link rel='shortcut icon' type='image/x-icon' href='#' />
 
 	<title>
-		Tona Supermarket
+		Win water | ዊን ውሃ
 		|
 		Dashboard
 	</title>

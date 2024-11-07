@@ -9,20 +9,18 @@ if (isset($_POST['register'])) {
 
 
 
-    $sql = "INSERT INTO `items`(`item_code`,`registered_by_id`,  `name`, `total`, `category`, expiry_date, `item_price`, status, description)
-                                VALUES (?,?,?,?,?,?,?,?, ?)";
+    $sql = "INSERT INTO `item_types`(`item_type_code`,`registered_by_id`,  `name`, `min_target`,`max_target`, `category`, status, description)
+                                VALUES (?,?,?,?,?,?,?,?)";
 
     $allergies = "";
     $registered_by_id = $user->id;
     $status = 0;
-    $gender = "Female";
-    $house_number = rand(10, 1000);
 
 
     $stmt = mysqli_prepare($conn, $sql);
 
 
-    mysqli_stmt_bind_param($stmt, 'sisissiis', $_POST['item_code'], $registered_by_id,  $_POST['name'], $_POST['total'], $_POST['category'], $_POST['expiry_date'],  $_POST['item_price'], $status, $_POST['description']);
+    mysqli_stmt_bind_param($stmt, 'sisiisss', $_POST['item_type_code'], $registered_by_id,  $_POST['name'], $_POST['min_target'],  $_POST['max_target'], $_POST['category'],  $status, $_POST['description']);
 
     mysqli_stmt_execute($stmt);
 
@@ -31,7 +29,7 @@ if (isset($_POST['register'])) {
         setMessage("Registered successfully!");
 
 
-        header('Location:item.list.php');
+        header('Location:item.type.list.php');
     } else {
         $error = true;
         $msg = 'error occurred.';
@@ -45,8 +43,8 @@ if (isset($_POST['register'])) {
 <div class="col-12">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Register new item </h3>
-            <a href="item.list.php" class="btn btn-primary btn-sm mx-3 float-right">Back to list</a>
+            <h3 class="card-title">Register new Product Type </h3>
+            <a href="item.type.list.php" class="btn btn-primary btn-sm mx-3 float-right">Back to list</a>
 
 
         </div>
@@ -61,8 +59,8 @@ if (isset($_POST['register'])) {
                     <div class="col-sm-4">
 
                         <div class="form-group">
-                            <label for="item_code">item code</label>
-                            <input type="item_code" value="<?php echo rand(); ?>" name="item_code" id="item_code" class="form-control" required readonly>
+                            <label for="item_type_code">Product Type code</label>
+                            <input type="item_type_code" value="<?php echo rand(); ?>" name="item_type_code" id="item_type_code" class="form-control" required readonly>
                         </div>
 
                     </div>
@@ -70,51 +68,27 @@ if (isset($_POST['register'])) {
 
                         <div class="form-group">
                             <label for="name">Name</label>
-                            <select for="name" class="form-control" name="name" id="product_name">
-                           <option >Select Item Type</option>
-                             
-                             <?php 
-$item_types = fetchAllData("item_types", "id", "DESC");
-
-foreach ($item_types as $item) { 
-
-                                echo "<option data-mintarget='". $item['min_target']."' data-maxtarget='". $item['max_target']."' value='". $item['name'] ."'>". $item['name'] ."</option>";
-}
-                                
-                                ?>
-                                
-
-                            </select>
-
+                            <input type="text" name="name" id="name" class="form-control" autocomplete="name" required autofocus>
                         </div>
 
                     </div>
                     <div class="col-sm-4">
 
                         <div class="form-group">
-                            <label for="product_total">Total</label>
-                            <input type="number" name="total" id="product_total" class="form-control" autocomplete="total" required>
-                        </div>
-
-                    </div>
-
-
-                    <div class="col-sm-4">
-
-                        <div class="form-group">
-                            <label for="item_price">Item price</label>
-                            <input type="number" name="item_price" id="item_price" class="form-control" autocomplete="item_price" required>
+                            <label for="min_target">Min Target</label>
+                            <input type="number" name="min_target" id="min_target" min="0" class="form-control" autocomplete="total" required>
                         </div>
 
                     </div>
                     <div class="col-sm-4">
 
                         <div class="form-group">
-                            <label for="expiry_date">Expiry Date</label>
-                            <input type="date" name="expiry_date" id="expiry_date" class="form-control" autocomplete="expiry_date" required>
+                            <label for="max_target">Max Target</label>
+                            <input type="number" name="max_target" id="max_target" min="0" class="form-control" autocomplete="total" required>
                         </div>
 
                     </div>
+
 
                     <div class="col-sm-4">
 
@@ -138,8 +112,6 @@ foreach ($item_types as $item) {
                         </div>
 
                     </div>
-
-
 
 
 
