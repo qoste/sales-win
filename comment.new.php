@@ -12,13 +12,10 @@ if (isset($_POST['register'])) {
     $sql = "INSERT INTO `comments`(`comment_code`,`commented_by`,  `title`, `content`,  status, is_anonymous)
                                 VALUES (?,?,?,?,?,?)";
 
-    $allergies = "";
     $commented_by = $user->first_name;
     $status = 0;
     $is_anonymous = 0;
-    $gender = "Female";
-    $house_number = rand(10, 1000);
-
+    
 
     $stmt = mysqli_prepare($conn, $sql);
 

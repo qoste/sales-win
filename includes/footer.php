@@ -147,7 +147,8 @@
         action: "change_status"
       },
       success: function(response) {
-     
+        window.location.replace("order.list.php");
+       
       },
       error: function(xhr, status, error) {
       
@@ -196,6 +197,54 @@
             });
         });
     });
+</script>
+<script>
+function printDiv(divId) {
+    // Get the original div
+    const originalDiv = document.getElementById(divId);
+    
+    // Clone the div
+    const divClone = originalDiv.cloneNode(true);
+    
+    // Remove all buttons inside the cloned div
+    divClone.querySelectorAll("button").forEach(button => button.remove());
+    divClone.querySelectorAll("a").forEach(button => button.remove());
+    const stylesheets = Array.from(document.styleSheets)
+        .map(styleSheet => {
+            try {
+                return Array.from(styleSheet.cssRules)
+                    .map(rule => rule.cssText)
+                    .join('');
+            } catch (e) {
+                console.warn("Couldn't access stylesheet:", styleSheet.href);
+                return '';
+            }
+        })
+        .join('');
+    // Create a new window for printing
+    const printWindow = window.open("", "_blank");
+    printWindow.document.open();
+    printWindow.document.write(`
+        <html>
+            <head>
+                <title>Print</title>
+                <style>
+                       ${stylesheets}
+                </style>
+            </head>
+            <body>
+                ${divClone.innerHTML}
+            </body>
+        </html>
+    `);
+    // printWindow.document.close();
+
+    // Wait for content to load, then print
+    printWindow.onload = () => {
+        printWindow.print();
+        printWindow.close();
+    };
+}
 </script>
 </body>
 

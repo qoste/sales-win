@@ -19,11 +19,7 @@ if (isset($_POST['register'])) {
 
 
 
-
     $sql = "UPDATE items  SET   name=?, total=?, item_price=?, category=?, description=? WHERE id=?";
-
-    $gender = "Female";
-
 
     $stmt = mysqli_prepare($conn, $sql);
 

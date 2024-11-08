@@ -84,7 +84,7 @@ $result = mysqli_query($conn, $sql);
                                 <td><?php echo $row['description'] ?></td>
                                 <td><?php echo $row['registered_at'] ?></td>
                                 <td>
-                                    <a href="item.edit.php?id=<?php echo $row['id']; ?>" class="btn btn-warning btn-sm">edit</a>
+                                    
                                     <form method="post" onsubmit="return confirm('are you sure you want to delete this Product Type');" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="form-horizontal form-inline">
                                         <input type="hidden" name="item_type_id" value="<?php echo $row['id']; ?>" />
                                         <input type="hidden" name="delete" value="true" />

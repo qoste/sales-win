@@ -12,11 +12,9 @@ if (isset($_POST['register'])) {
     $sql = "INSERT INTO `items`(`item_code`,`registered_by_id`,  `name`, `total`, `category`, expiry_date, `item_price`, status, description)
                                 VALUES (?,?,?,?,?,?,?,?, ?)";
 
-    $allergies = "";
     $registered_by_id = $user->id;
     $status = 0;
-    $gender = "Female";
-    $house_number = rand(10, 1000);
+  
 
 
     $stmt = mysqli_prepare($conn, $sql);

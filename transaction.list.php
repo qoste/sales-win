@@ -27,11 +27,12 @@
                     <tr>
                         <th>ID</th>
                         <th>Transaction code</th>
-                        <th>Item</th>
+                        <th>Item Count</th>
                         <th>Customer</th>
-                        <th>Amount</th>
+                        <th>Total Price</th>
+                        <th>Processed by</th>
                         <th>Created At</th>
-                        <th>actions</th>
+                     
 
                     </tr>
                 </thead>
@@ -40,17 +41,18 @@
                     $transactions = fetchAllData('transaction');
 
                     foreach ($transactions as $transaction) {
+                       $user= fetchData("user",$transaction['customer_id']);
                     ?>
 
                         <tr>
                             <td><?php echo $transaction['id']; ?></td>
                             <td><?php echo  $transaction['transaction_code']; ?></td>
-                            <td><?php echo  $transaction['item_id']; ?></td>
-                            <td><?php echo  $transaction['customer_id']; ?></td>
-                            <td><span class="tag tag-success"><?php echo $transaction['amount']; ?></span></td>
+                            <td><?php echo  $transaction['quantity']; ?></td>
+                            <td><?php echo  $user->first_name." ". $user->middle_name; ?></td>
+                            <td><span class="tag tag-success"><?php echo $transaction['total_price']; ?></span></td>
+                            <td><?php echo $transaction['processed_by']; ?></td>
                             <td><?php echo $transaction['created_at']; ?></td>
-                            <td>
-                            </td>
+                           
 
                         </tr>
                     <?php } ?>

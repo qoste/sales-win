@@ -5,16 +5,17 @@ $comment_count = count(fetchAllData("comments"));
 $customers_count = count(fetchAllData("customers"));
 $user_count = count(fetchAllData("user"));
 $transaction_count = count(fetchAllData("transaction"));
+$total_price_result = mysqli_fetch_assoc(mysqli_query($conn,"SELECT sum(total_price) as price_aggregate FROM transaction"));
+$today_price_result = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(total_price) AS price_aggregate FROM transaction WHERE DATE(created_at) = CURDATE()"));
+$this_week_price_result = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(total_price) AS price_aggregate FROM transaction WHERE YEARWEEK(created_at, 1) = YEARWEEK(CURDATE(), 1)"));
+$this_month_price_result = mysqli_fetch_assoc(mysqli_query($conn,"SELECT SUM(total_price) AS price_aggregate FROM transaction WHERE YEAR(created_at) = YEAR(CURDATE()) AND MONTH(created_at) = MONTH(CURDATE())"));
 
 $items = fetchAllData("items", "id", "DESC");
 
 ?>
-
-
-
 <div class="row container">
 
-    <?php if ($user->user_type_id == USERS_TYPE_SALES || $user->user_type_id == USERS_TYPE_ADMIN) { ?>
+    <?php if ($user->user_type_id != USERS_TYPE_CUSTOMER) { ?>
 
         <div class="col-md-4 col-sm-6 col-12">
             <div class="info-box">
@@ -48,7 +49,7 @@ $items = fetchAllData("items", "id", "DESC");
     <?php } ?>
 
     <!-- /.col -->
-    <?php if ($user->user_type_id == USERS_TYPE_CUSTOMER || $user->user_type_id == USERS_TYPE_ADMIN) { ?>
+    <?php if ($user->user_type_id != USERS_TYPE_CUSTOMER) { ?>
 
         <div class="col-md-4 col-sm-6 col-12">
             <div class="info-box">
@@ -116,6 +117,74 @@ $items = fetchAllData("items", "id", "DESC");
     <?php } ?>
 </div>
 </div>
+<div class="text-pink h2 py-3">Transaction summary</div>
+
+<div class="row container">
+
+    <?php if ($user->user_type_id == USERS_TYPE_SALES || $user->user_type_id == USERS_TYPE_ADMIN) { ?>
+
+        <div class="col-6 ">
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="fa fa-list"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"> <a href="item.list.php" class="small-box-footer">
+                            Today Sales
+                        </a></span>
+                    <span class="info-box-number"><?php echo $today_price_result['price_aggregate']; ?>ETB</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+          <div class="col-6 ">
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="fa fa-list"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"> <a href="item.list.php" class="small-box-footer">
+                            This Week Sales
+                        </a></span>
+                    <span class="info-box-number"><?php echo $this_week_price_result['price_aggregate']; ?>ETB</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+           <div class="col-6 ">
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="fa fa-list"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"> <a href="item.list.php" class="small-box-footer">
+                            This Month Sales
+                        </a></span>
+                    <span class="info-box-number"><?php echo $this_month_price_result['price_aggregate']; ?>ETB</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+        <div class="col-6">
+            <div class="info-box">
+                <span class="info-box-icon bg-info"><i class="fa fa-list"></i></span>
+
+                <div class="info-box-content">
+                    <span class="info-box-text"> <a href="transaction.list.php" class="small-box-footer">
+                           Total Sales
+                        </a></span>
+                    <span class="info-box-number"><?php echo $total_price_result['price_aggregate']; ?>ETB</span>
+                </div>
+                <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+        </div>
+
+    <?php } ?>
+
+   
+</div>
+</div>
 
 
 
@@ -123,7 +192,7 @@ $items = fetchAllData("items", "id", "DESC");
     <div class="col-12">
         <div class="card">
             <div class="card-header">
-                <h3 class="card-title">Recent items</h3>
+                <h3 class="card-title">Recent Transactions</h3>
 
                 <div class="card-tools">
                     <div class="input-group input-group-sm" style="width: 150px;">
@@ -137,44 +206,44 @@ $items = fetchAllData("items", "id", "DESC");
             </div>
             <!-- /.card-header -->
             <div class="card-body table-responsive p-0">
-                <table class="table table-hover ">
-                    <thead>
+            <table class="table table-hover ">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Transaction code</th>
+                        <th>Item Count</th>
+                        <th>Customer</th>
+                        <th>Total Price</th>
+                        <th>Processed by</th>
+                        <th>Created At</th>
+                     
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $transactions = fetchAllData('transaction');
+
+                    foreach ($transactions as $transaction) {
+                       $user= fetchData("user",$transaction['customer_id']);
+                    ?>
+
                         <tr>
-                            <th>ID</th>
-                            <th>Item code</th>
-
-                            <th>Name</th>
-                            <th>Categoy</th>
-                            <th>Item Price</th>
-                            <th>Total</th>
-                            <th>Registered At</th>
-
+                            <td><?php echo $transaction['id']; ?></td>
+                            <td><?php echo  $transaction['transaction_code']; ?></td>
+                            <td><?php echo  $transaction['quantity']; ?></td>
+                            <td><?php echo  $user->first_name." ". $user->middle_name; ?></td>
+                            <td><span class="tag tag-success"><?php echo $transaction['total_price']; ?></span></td>
+                            <td><?php echo $transaction['processed_by']; ?></td>
+                            <td><?php echo $transaction['created_at']; ?></td>
+                           
 
                         </tr>
-                    </thead>
-                    <tbody>
-
-                        <?php foreach ($items as $key => $row) {
-
-                            if ($key > 4)
-                                break;
-                        ?>
-                            <tr>
-                                <td><?php echo $key + 1 ?></td>
-                                <td><?php echo $row['item_code'] ?></td>
-
-                                <td><?php echo $row['name']  ?></td>
-                                <td><span class="tag tag-success"><?php echo $row['category'] ?></span></td>
-                                <td><?php echo $row['item_price'] ?>ETB</td>
-                                <td><?php echo $row['total'] ?></td>
-                                <td><?php echo $row['registered_at'] ?></td>
-
-                            </tr>
-                        <?php } ?>
+                    <?php } ?>
 
 
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
             </div>
             <!-- /.card-body -->
         </div>

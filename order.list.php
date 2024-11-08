@@ -9,25 +9,53 @@ if (isset($_POST['action']) && isset($_POST['status'])) {
     $order_id = $_POST['order_id'];
     $status = $_POST['status'];
 
-  
-    $sql = "UPDATE orders SET status = ? WHERE id = ?";
+    $sql = "UPDATE orders_parent SET status = ?, approved_by = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
-    
-   
 
-    $stmt->bind_param('si', $status, $order_id); 
+    $approved_by = $user->fullName;
+
+
+    $stmt->bind_param('ssi', $status, $approved_by,  $order_id);
+
+
     if ($stmt->execute()) {
+
+        if ($status == 2) {
+
+            $order_parent = mysqli_fetch_assoc(mysqli_query($conn,"SELECT * FROM orders_parent WHERE id =".$order_id));
+
+            $sql = "INSERT INTO `transaction`(`total_price`, `quantity`, `customer_id`, `transaction_code`, `processed_by`) VALUES (?,?,?,?,?)";
+
+            $registered_by_id = $user->id;
+            $status = 0;
+            $transaction_code = rand();
+
+            $stmt = mysqli_prepare($conn, $sql);
+
+
+            mysqli_stmt_bind_param($stmt, 'iiiss', $order_parent['total_price'], $order_parent['item_count'],  $order_parent['ordered_by'], $transaction_code, $user->fullName);
+
+            mysqli_stmt_execute($stmt);
+
+            if (mysqli_insert_id($conn)) {
+
+                setMessage("Created Transaction successfully!");
+            } else{
+            }
+          
+
+        }
         setMessage("Status Updated successfully");
-        header('Location:order.list.php');
     }
-  
 }
 
 
 if (isset($_POST['delete'])) {
 
-    $sql = "DELETE FROM orders WHERE id=" . $_POST['order_id'];
+    $sql = "DELETE FROM orders_parent WHERE id=" . $_POST['order_id'];
     if (mysqli_query($conn, $sql)) {
+        $child_sql = "DELETE FROM orders WHERE parent_id=" . $_POST['order_id'];
+        mysqli_query($conn, $child_sql);
 
         setMessage("Deleted successfully");
 
@@ -40,9 +68,8 @@ if (isset($_POST['delete'])) {
 $msg = '';
 $error = false;
 
-$sql = "SELECT * FROM orders";
+$sql = "SELECT * FROM orders_parent";
 $result = mysqli_query($conn, $sql);
-
 
 
 
@@ -78,16 +105,11 @@ $result = mysqli_query($conn, $sql);
                     <tr>
                         <th>#</th>
                         <th>Order code</th>
-                        <th>Item code</th>
-
-                        <th>Name</th>
-                        <th>Category</th>
-                        <th>Item Price</th>
-                        <th>Item Quantity</th>
+                        <th>Item Count</th>
                         <th>Total Price</th>
                         <th>Status</th>
                         <th>Ordered By</th>
-
+                        <th>Approved By</th>
                         <th>Ordered At</th>
                         <th>Actions</th>
 
@@ -99,14 +121,11 @@ $result = mysqli_query($conn, $sql);
                     if (mysqli_num_rows($result) > 0) {
                         // output data of each row
                         while ($row = mysqli_fetch_assoc($result)) {
-                            $item_sql = "SELECT * FROM items WHERE id = " . $row['item_id'];
-                            $item_qu = mysqli_query($conn, $item_sql);
-                            $item_result = mysqli_fetch_assoc($item_qu);
 
                             $user_sql = "SELECT * FROM user WHERE id = " . $row['ordered_by'];
                             $user_qu = mysqli_query($conn, $user_sql);
                             $user_result = mysqli_fetch_assoc($user_qu);
-                            if (!in_array($user->user_type_id, [1,3,4,5]) && $user_result['id'] != $user->id) {
+                            if (!in_array($user->user_type_id, [1, 3, 4, 5]) && $user_result['id'] != $user->id) {
                                 continue;
                             }
 
@@ -116,42 +135,40 @@ $result = mysqli_query($conn, $sql);
                             <tr>
                                 <td><?php echo $row['id'] ?></td>
                                 <td><?php echo $row['order_code'] ?></td>
-                                <td><?php echo $item_result['item_code'] ?></td>
-
-                                <td><?php echo $item_result['name']  ?></td>
-                                <td><?php echo $item_result['category']  ?></td>
-                                <td><?php echo $row['item_price']  ?>ETB</td>
-                                <td><?php echo $row['quantity']  ?></td>
-                                <td><?php echo $row['item_price'] * $row['quantity']  ?>ETB</td>
+                                <td><?php echo $row['item_count'] ?></td>
+                                <td><?php echo $row['total_price'] ?>ETB</td>
                                 <td>
-
-                                <?php 
-                                    if (in_array($user->user_type_id, [1,3])) { 
-                                        ?>
-
-                                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="form-horizontal form-inline">
-                                        <input type="hidden" name="order_id" value="<?php echo $row['id']; ?>" />
-                                        <input type="hidden" name="status_change" value="true" />
-                                        <select for="status_type" class="form-control order-status-select" name="status_type" id="status_type" class="" data-order-id="<?php echo $row['id'];?>">
-                                <option value="0" <?php echo $row['status'] == '0'  ? 'selected' : '' ?>>Pending</option>
-
-                                <option value="1" <?php echo $row['status'] == '1'  ? 'selected' : '' ?>>Processing</option>
-                                <option value="2" <?php echo $row['status'] == '2'  ? 'selected' : '' ?>>Delivered</option>
-                                <option value="3" <?php echo $row['status'] == '3'  ? 'selected' : '' ?>>Canceled</option>
-                            </select>
-                                    </form>
 
                                     <?php
-                                    } else{
+                                    if (in_array($user->user_type_id, [1, 3])) {
                                     ?>
-                                <?php echo $order_status["".$row['status'].""] ?>
+
+                                        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="form-horizontal form-inline">
+                                            <input type="hidden" name="order_id" value="<?php echo $row['id']; ?>" />
+                                            <input type="hidden" name="status_change" value="true" />
+                                            <select for="status_type" class="form-control order-status-select" name="status_type" id="status_type" class="" data-order-id="<?php echo $row['id']; ?>">
+                                                <option value="0" <?php echo $row['status'] == '0'  ? 'selected' : '' ?>>Pending</option>
+
+                                                <option value="1" <?php echo $row['status'] == '1'  ? 'selected' : '' ?>>Processing</option>
+                                                <option value="2" <?php echo $row['status'] == '2'  ? 'selected' : '' ?>>Delivered</option>
+                                                <option value="3" <?php echo $row['status'] == '3'  ? 'selected' : '' ?>>Canceled</option>
+                                            </select>
+                                        </form>
+
+                                    <?php
+                                    } else {
+                                    ?>
+                                        <?php echo $order_status["" . $row['status'] . ""] ?>
                                     <?php } ?>
-                                    
-                            </td>
-                            
+
+                                </td>
+
                                 <td><?php echo $user_result['first_name'] . ' ' . $user_result['last_name'] ?></td>
+                                <td><?php echo $row['approved_by'] ?></td>
                                 <td><?php echo $row['ordered_at'] ?></td>
                                 <td>
+                                    <a href="order.details.php?order_parent_id=<?php echo $row['id']; ?>&&show-order=true" class="btn btn-success btn-sm">Details</a>
+
                                     <form method="post" onsubmit="return confirm('are you sure you want to delete this order');" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="form-horizontal form-inline">
                                         <input type="hidden" name="order_id" value="<?php echo $row['id']; ?>" />
                                         <input type="hidden" name="delete" value="true" />

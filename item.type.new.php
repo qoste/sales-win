@@ -12,7 +12,6 @@ if (isset($_POST['register'])) {
     $sql = "INSERT INTO `item_types`(`item_type_code`,`registered_by_id`,  `name`, `min_target`,`max_target`, `category`, status, description)
                                 VALUES (?,?,?,?,?,?,?,?)";
 
-    $allergies = "";
     $registered_by_id = $user->id;
     $status = 0;
 
